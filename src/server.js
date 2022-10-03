@@ -14,7 +14,7 @@ app.set("views", process.cwd() + "/src/views");
 app.use(loggerMiddleware);
 
 app.use("/", globalRouter);
-app.use("/videos", videoRouter);
+app.use("/video", videoRouter);
 app.use("/users", userRouter);
 
 const handleListening = () =>
