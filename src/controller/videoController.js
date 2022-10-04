@@ -29,12 +29,12 @@ export const trending = (req, res) => {
   return res.render("home", { pageTitle: "Home", videos });
 };
 export const search = (req, res) => res.send("video search");
-export const see = (req, res) => {
+export const watch = (req, res) => {
   const { id } = req.params;
 
   const video = videos[id - 1];
 
-  res.render("watch", { pageTitle: `Watching ${video.title}` });
+  res.render("watch", { pageTitle: `Watching ${video.title}`, video });
 };
 export const edit = (req, res) => res.send("video edit");
 export const remove = (req, res) => res.send("video remove");
