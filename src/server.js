@@ -11,6 +11,7 @@ const loggerMiddleware = logger("dev");
 app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 
+app.use(express.urlencoded({ extended: true }));
 app.use(loggerMiddleware);
 
 app.use("/", globalRouter);
