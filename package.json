@@ -7,6 +7,7 @@
     "url": "git+https://github.com/Dayglow0926/wetube-reloaded.git"
   },
   "scripts": {
+    "mongodb": "sudo service mongodb start",
     "dev": "nodemon -L --exec babel-node src/server.js"
   },
   "author": "Kim Jookwang <dayglow0926@gmail.co.kr>",

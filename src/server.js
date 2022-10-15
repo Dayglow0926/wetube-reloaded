@@ -1,12 +1,12 @@
 import "./db";
-
+import Video from "./models/video";
 import express from "express";
 import logger from "morgan";
 import globalRouter from "./routers/globalRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 
-const PORT = 4000;
+const PORT = 4001;
 const app = express();
 const loggerMiddleware = logger("dev");
 
