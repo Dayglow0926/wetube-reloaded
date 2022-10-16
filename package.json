@@ -8,7 +8,7 @@
   },
   "scripts": {
     "mongodb": "sudo service mongodb start",
-    "dev": "nodemon -L --exec babel-node src/server.js"
+    "dev": "nodemon -L --exec babel-node src/init.js"
   },
   "author": "Kim Jookwang <dayglow0926@gmail.co.kr>",
   "license": "MIT",
