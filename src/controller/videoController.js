@@ -30,7 +30,7 @@ export const getUpload = (req, res) => {
   return res.render("upload", { pageTitle: "Upload Video" });
 };
 
-export const postUpload = (req, res) => {
+export const postUpload = async (req, res) => {
   // here we will add a video to the videos array.
   const { title, description, hashtags } = req.body;
   const video = new Video({
@@ -43,6 +43,19 @@ export const postUpload = (req, res) => {
       rating: 0,
     },
   });
+
+  await Video({
+    title,
+    description,
+    hashtags: hashtags.split(",").map((word) => `#${word}`),
+    createdAt: Date.now(),
+    meta: {
+      views: 0,
+      rating: 0,
+    },
+  });
+
+  const dbVideo = await video.save();
 
   console.log(video);
   return res.redirect("/");
