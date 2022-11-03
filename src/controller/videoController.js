@@ -2,7 +2,7 @@ import Video from "../models/Video";
 
 export const home = async (req, res) => {
   console.log("Start");
-  const videos = await Video.find({});
+  const videos = await Video.find({}).sort({ createdAt: "desc" });
   console.log("Database Finish");
   return res.render("home", { pageTitle: "Home", videos });
 };
@@ -72,4 +72,18 @@ export const deleteVideo = async (req, res) => {
   const { id } = req.params;
   await Video.findByIdAndDelete(id);
   return res.redirect("/");
+};
+
+export const searchVideo = async (req, res) => {
+  const { title } = req.query;
+  let videos = [];
+  if (title) {
+    videos = await Video.find({
+      title: {
+        $regex: new RegExp(title, "i"),
+      },
+    });
+  }
+
+  return res.render("search", { pageTitle: "Search", videos });
 };
