@@ -42,7 +42,7 @@ export const getLogin = (req, res) => res.render("login");
 
 export const postLogin = async (req, res) => {
   const { username, password } = req.body;
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ username, socialOnly: false });
 
   const pageTitle = "Login";
 
@@ -129,14 +129,10 @@ export const callbackGithubLogin = async (req, res) => {
       res.redirect("/login");
     }
 
-    const existingUser = await User.findOne({ email: emailObj.email });
-    if (existingUser) {
-      req.session.loggedIn = true;
-      req.session.user = existingUser;
-
-      return res.redirect("/");
-    } else {
-      const user = await User.create({
+    let user = await User.findOne({ email: emailObj.email });
+    if (!user) {
+      user = await User.create({
+        avatarUrl: userRequest.avatar_url,
         name: userRequest.name,
         username: userRequest.login,
         email: emailObj.email,
@@ -144,18 +140,20 @@ export const callbackGithubLogin = async (req, res) => {
         socialOnly: true,
         location: userRequest.location,
       });
-
-      req.session.loggedIn = true;
-      req.session.user = user;
-
-      return res.redirect("/");
     }
+
+    req.session.loggedIn = true;
+    req.session.user = user;
+    return res.redirect("/");
   } else {
     res.redirect("/login");
   }
 };
 
-export const logout = (req, res) => res.send("user logout");
+export const logout = (req, res) => {
+  req.session.destroy();
+  return res.redirect("/");
+};
 export const edit = (req, res) => res.send("user edit");
 export const deleteInfo = (req, res) => res.send("user delete");
 
