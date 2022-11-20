@@ -66,8 +66,96 @@ export const postLogin = async (req, res) => {
 
   return res.redirect("/");
 };
-export const logout = (req, res) => res.send("user logout");
 
+export const startGithubLogin = (req, res) => {
+  const baseUrl = `https://github.com/login/oauth/authorize`;
+  const config = {
+    client_id: process.env.GH_CLIENT,
+    allow_signup: false,
+    scope: "read:user user:email",
+  };
+  const params = new URLSearchParams(config).toString();
+  const finalUrl = `${baseUrl}?${params}`;
+
+  return res.redirect(finalUrl);
+};
+
+export const callbackGithubLogin = async (req, res) => {
+  const baseUrl = "https://github.com/login/oauth/access_token";
+  const config = {
+    client_id: process.env.GH_CLIENT,
+    client_secret: process.env.GH_SECRET,
+    code: req.query.code,
+  };
+
+  const params = new URLSearchParams(config).toString();
+  const finalUrl = `${baseUrl}?${params}`;
+
+  const data = await (
+    await fetch(finalUrl, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+  ).json();
+
+  if ("access_token" in data) {
+    const { access_token } = data;
+    const apiUrl = "https://api.github.com";
+    const userRequest = await (
+      await fetch(`${apiUrl}/user`, {
+        headers: {
+          Authorization: `token ${access_token}`,
+        },
+      })
+    ).json();
+
+    console.log(userRequest);
+    const emailData = await (
+      await fetch(`${apiUrl}/user/emails`, {
+        headers: {
+          Authorization: `token ${access_token}`,
+        },
+      })
+    ).json();
+    console.log(emailData);
+
+    const emailObj = emailData.find(
+      (email) => email.primary === true && email.verified === true
+    );
+
+    if (!emailObj) {
+      res.redirect("/login");
+    }
+
+    const existingUser = await User.findOne({ email: emailObj.email });
+    if (existingUser) {
+      req.session.loggedIn = true;
+      req.session.user = existingUser;
+
+      return res.redirect("/");
+    } else {
+      const user = await User.create({
+        name: userRequest.name,
+        username: userRequest.login,
+        email: emailObj.email,
+        password: "",
+        socialOnly: true,
+        location: userRequest.location,
+      });
+
+      req.session.loggedIn = true;
+      req.session.user = user;
+
+      return res.redirect("/");
+    }
+  } else {
+    res.redirect("/login");
+  }
+};
+
+export const logout = (req, res) => res.send("user logout");
 export const edit = (req, res) => res.send("user edit");
 export const deleteInfo = (req, res) => res.send("user delete");
 
