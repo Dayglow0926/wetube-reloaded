@@ -35,6 +35,7 @@ app.use(
 app.use(localsMiddleware);
 
 app.use("/", rootRouter);
+app.use("/static", express.static("assets"));
 app.use("/video", videoRouter);
 app.use("/users", userRouter);
 
