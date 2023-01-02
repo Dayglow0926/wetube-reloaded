@@ -1,19 +1,11 @@
-# Wetube Reloaded
+# NodeJS
 
-[ global router ]
-/ -> Home
-/join -> Join
-/login -> Login
-/search -> Search
+- [What is NodeJS](https://dayglow0926.notion.site/What-is-NodeJS-5e3bb813477f45a69709284fd25d075b)
 
-[ users router ]
-/users/:id ( See user )
-/users/logout ( Log Out )
-/users/edit ( Edit MY Profile )
-/users/delete ( Delete MY Profile )
+## npm
 
-[ videos router ]
-/videos/:id ( See Video )
-/videos/:id/edit ( Edit Video - 본인만 )
-/videos/:id/delete ( Delete Video - 본인만 )
-/videos/upload (upload Video)
+- [What is NPM](https://dayglow0926.notion.site/What-is-NPM-0cb08fdbe6e64756b7be2bcdcd999864)
+
+## Express
+
+- [What is Express](https://dayglow0926.notion.site/What-is-Express-cf500bb1e6674d9a8d986a8fe3e28d75)
