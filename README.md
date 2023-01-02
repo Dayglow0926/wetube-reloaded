@@ -1,6 +1,7 @@
 # NodeJS
 
 - [What is NodeJS](https://dayglow0926.notion.site/What-is-NodeJS-5e3bb813477f45a69709284fd25d075b)
+- [package.json](https://dayglow0926.notion.site/package-json-8ccb70f82d224dd4b5cdecb17270d3cd)
 
 ## npm
 
