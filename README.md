@@ -5,6 +5,7 @@
 - [package-lock.json]()
 - [Babel](https://dayglow0926.notion.site/Babel-c2389ce16ce54028b7978e3a245ed9e8)
 - [nodemon](https://dayglow0926.notion.site/nodemon-f771b4e925714190b4dfe2e40b18b71e)
+- [morgan](https://dayglow0926.notion.site/morgan-3317c37778d9403d9110f4f8b5ef11af)
 
 ## npm
 
