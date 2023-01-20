@@ -18,3 +18,7 @@
 - [Server](https://dayglow0926.notion.site/Server-abbe06b83b1b4c5c937d4353b6c7cbe0)
 - [Middleware](https://dayglow0926.notion.site/Middlewares-7ba5396e7b134431865e5a1f4fe6266a)
 - [Route](https://dayglow0926.notion.site/Route-3ce1d021865949659ce48c54a6d031a9)
+
+## Pug
+
+- [What is Pug?](https://dayglow0926.notion.site/What-is-Pug-81fcc0838cb2462c9cb1fc7820c52a6e)
