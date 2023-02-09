@@ -2,27 +2,47 @@ import express from "express";
 
 const app = express();
 
-const PORT = 4003;
-
-const handleHome = (req, res) => {
-  return res.send("<h1 style='color:red;'>Hello! This is HomePage</h1>");
+app.set("trust proxy", false);
+const urlLogger = (req, res, next) => {
+  console.log(`Path: ${req.url}`);
+  next();
 };
-const handleAbout = (req, res) => {
-  return res.send("<h1 style='color:orange;'>Hello! This is aboutPage</h1>");
+const timeLogger = (req, res, next) => {
+  const date = new Date();
+  console.log(
+    `Time: ${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`
+  );
+  next();
 };
-const handleContact = (req, res) => {
-  return res.send("<h1 style='color:yellow;'>Hello! This is ContactPage</h1>");
-};
-const handleLogin = (req, res) => {
-  return res.send("<h1 style='color:green;'>Hello! This is loginPage</h1>");
+const securityLogger = (req, res, next) => {
+  let secureMessage = "Insecure";
+  if (req.secure) secureMessage = "secure";
+  console.log(secureMessage);
+  next();
 };
 
-app.get("/", handleHome);
-app.get("/about", handleAbout);
-app.get("/contact", handleContact);
-app.get("/login", handleLogin);
+// protectedMiddleware 첫번째 방법
+const protectedMiddleware = (req, res, next) => {
+  if (req.url === "/protected") {
+    return res.send("<h1>Not Allowed</h1>");
+  }
+  next();
+};
+// protectedMiddleware 두번째 방법
+const protectedMiddleware2 = (req, res, next) => {
+  return res.send("<h1>Not Allowed 2</h1>");
+};
 
-const handleListening = () =>
-  console.log(`Server listening on port http://localhost:${PORT} 🚀`);
+app.use(urlLogger);
+app.use(timeLogger);
+app.use(securityLogger);
+app.use(protectedMiddleware);
 
-app.listen(PORT, handleListening);
+app.get("/", (req, res) => res.send("<h1>Home</h1>"));
+app.get("/protected", (req, res) => res.send("<h1>Protected</h1>"));
+app.get("/protected2", protectedMiddleware2, (req, res) =>
+  res.send("<h1>Protected2</h1>")
+);
+
+// Codesandbox gives us a PORT :)
+app.listen(4003, () => console.log(`${4003} Listening!✅`));
