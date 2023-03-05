@@ -9,7 +9,8 @@
   "scripts": {
     "mongodb": "sudo service mongodb start",
     "dev:server": "nodemon",
-    "dev:assets": "webpack"
+    "dev:assets": "webpack",
+    "test:server": "nodemon --exec babel-node test-server.js"
   },
   "author": "Kim Jookwang <dayglow0926@gmail.co.kr>",
   "license": "MIT",
