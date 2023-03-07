@@ -1,17 +1,12 @@
-extends base.pug
-
-block content 
-    if errorMessage 
-        p=errorMessage
+extends base
+block content
+    if errorMessage
+        span=errorMessage
     form(method="POST")
-        input(placeholder="Username" name="username", type="text", required)
-        input(placeholder="Password" name="password", type="password", required)
-        input(type="submit" value="Join") 
-        br
-        a(href="/users/github/start") Continue with Github &rarr;
-    
-    hr
-    
-    div
-        span Already have an account? 
-        a(href="/join") Create one now &rarr; 
+        input(placeholder="Username", name="username", type="text", required)
+        input(placeholder="Password", name="password", type="password", required)
+        input(type="submit", value="Login")
+        include partials/social-login
+    div.auth-switch
+        span Don't have an account? 
+        a(href="/join") Create one now &rarr;
