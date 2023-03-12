@@ -9,9 +9,17 @@ const s3 = new aws.S3({
   },
 });
 
-const multerUploader = multerS3({
+const isDeploy = process.env.NODE_ENV === "production";
+
+const s3ImageUploader = multerS3({
   s3: s3,
-  bucket: "dayglow-wetube",
+  bucket: "dayglow-wetube/images",
+  acl: "public-read",
+});
+
+const s3VideoUploader = multerS3({
+  s3: s3,
+  bucket: "dayglow-wetube/videos",
   acl: "public-read",
 });
 
@@ -46,7 +54,7 @@ export const avatarUpload = multer({
   limits: {
     fileSize: 3000000,
   },
-  storage: multerUploader,
+  storage: isDeploy ? s3ImageUploader : undefined,
 });
 
 export const videoUpload = multer({
@@ -54,5 +62,5 @@ export const videoUpload = multer({
   limits: {
     fileSize: 100000000,
   },
-  storage: multerUploader,
+  storage: isDeploy ? s3VideoUploader : undefined,
 });
