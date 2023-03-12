@@ -15,10 +15,7 @@ header
                     a(href="/users/edit") Edit Profile
                 li
                     a(href="/users/logout")  Log Out
-                    if loggedInUser.avatarUrl.indexOf("https://") >= 0
-                        img(src=loggedInUser.avatarUrl).avatar
-                    else
-                        img(src=loggedInUser.avatarUrl).avatar
+                    img(src=loggedInUser.avatarUrl).avatar
             else
                 li
                     a(href="/login")  Login                        
