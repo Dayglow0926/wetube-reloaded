@@ -6,7 +6,7 @@ block content
         if user.avatarUrl.indexOf("https://") >= 0
             img(src=user.avatarUrl).avatar
         else
-            img(src="/" + user.avatarUrl).avatar
+            img(src=user.avatarUrl crossorigin).avatar
         h3=user.name
     div.video-grid
         each video in user.videos
